@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Poker App{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'game/css/style.css' %}">
+</head>
+<body>
+  <header>
+    <h1>テキサスホールデム チップ管理</h1>
+    {% if user.is_authenticated %}
+      <p>
+        ようこそ {{ user.username }} さん！
+        <form method="post" action="{% url 'logout' %}" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit">ログアウト</button>
+        </form>
+      </p>
+    {% else %}
+      <p>
+        <a href="{% url 'login' %}">ログイン</a> |
+        <a href="{% url 'signup' %}">新規登録</a>
+      </p>
+    {% endif %}
+  </header>
+
+    <!-- メッセージ表示 -->
+  {% if messages %}
+    <ul class="messages">
+      {% for msg in messages %}
+        <li class="message {{ msg.tags }}">{{ msg }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <small>&copy; 2025 Poker App</small>
+  </footer>
+
+  <script src="{% static 'game/js/app.js' %}"></script>
+</body>
+</html>

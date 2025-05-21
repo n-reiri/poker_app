@@ -1,0 +1,62 @@
+{% extends "game/base.html" %}
+{% load i18n static %}
+
+{% block title %}新規登録 - Poker App{% endblock %}
+
+{% block content %}
+  <h2>新規ユーザー登録</h2>
+
+  {# 全体エラー（フィールド間のエラーなど） #}
+  {% if form.non_field_errors %}
+    <ul class="errorlist">
+      {% for error in form.non_field_errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+
+    <div>
+      <label for="id_username">ユーザー名：</label>
+      {{ form.username }}
+      {# username フィールド固有のエラー #}
+      {% if form.username.errors %}
+        <ul class="errorlist">
+          {% for error in form.username.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+
+    <div>
+      <label for="id_password1">パスワード：</label>
+      {{ form.password1 }}
+      {% if form.password1.errors %}
+        <ul class="errorlist">
+          {% for error in form.password1.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+
+    <div>
+      <label for="id_password2">パスワード（確認）：</label>
+      {{ form.password2 }}
+      {% if form.password2.errors %}
+        <ul class="errorlist">
+          {% for error in form.password2.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+
+    <button type="submit">登録する</button>
+  </form>
+
+  <p>登録済みの方は<a href="{% url 'login' %}">ログイン</a></p>
+{% endblock %}

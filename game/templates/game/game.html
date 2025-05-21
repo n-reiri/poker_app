@@ -1,0 +1,34 @@
+{% extends "game/base.html" %} {% load i18n static %} {% block title %}ゲーム画面 -
+Poker App{% endblock %} {% block content %}
+<h2>ゲームテーブル（Room #{{ room_id }}）</h2>
+
+<!-- ルーム一覧に戻るボタン -->
+<p>
+  <a href="{% url 'room_list' %}" class="btn">← ルーム選択へ</a>
+</p>
+<!-- Room ID を JS に渡すための隠し要素 -->
+<script id="room-id" type="application/json">
+  {{ room_id }}
+</script>
+
+<!-- プレイヤー一覧とチップ表示 -->
+<div id="players">
+  {% for player in players %}
+  <div class="player" id="player-{{ player.id }}">
+    {{ player.user.username }}: <span class="chips">{{ player.chips }}</span> 枚
+  </div>
+  {% endfor %}
+</div>
+
+<!-- アクションパネル -->
+<div id="action-panel">
+  <input type="number" id="bet-amount" placeholder="ベット枚数" />
+  <button class="action-button" data-action="bet">Bet</button>
+  <button class="action-button" data-action="call">Call</button>
+  <button class="action-button" data-action="check">Check</button>
+  <button class="action-button" data-action="fold">Fold</button>
+  <button class="action-button" data-action="raise">Raise</button>
+</div>
+
+<script src="{% static 'game/js/app.js' %}"></script>
+{% endblock %}

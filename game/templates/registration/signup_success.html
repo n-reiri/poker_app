@@ -1,0 +1,16 @@
+{% extends "game/base.html" %} {% load i18n static %} {% block title %}登録完了 -
+Poker App{% endblock %} {% block content %}
+<h2>登録完了</h2>
+<p>新規登録が正常に完了しました。数秒後に自動でログイン画面へ移動します。</p>
+<p>
+  自動で移動しない場合は<a href="{% url 'login' %}">こちらをクリック</a
+  >してください。
+</p>
+
+<script>
+  // 2秒後にログインページへ遷移
+  setTimeout(function () {
+    window.location.href = "{% url 'login' %}";
+  }, 2000);
+</script>
+{% endblock %}

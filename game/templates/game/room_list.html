@@ -1,0 +1,35 @@
+<!-- poker_app/game/templates/game/room_list.html -->
+{% extends "game/base.html" %} {% load i18n static %} {% block title %}部屋一覧 -
+Poker App{% endblock %} {% block content %}
+<h2>部屋一覧</h2>
+
+<!-- 新規ルーム作成フォーム -->
+<form method="post" action="{% url 'room_list' %}">
+  {% csrf_token %}
+  <label for="room_name">新しい部屋名：</label>
+  <input
+    id="room_name"
+    type="text"
+    name="name"
+    placeholder="例：Friday Night"
+    required
+  />
+  <button type="submit">作成</button>
+</form>
+
+<hr />
+
+<!-- 既存ルームのリスト -->
+{% if rooms %}
+<ul>
+  {% for room in rooms %}
+  <li>
+    {{ room.name }}
+    <!-- 参加ボタン。room.id を URL に渡す -->
+    <a href="{% url 'game' room.id %}">参加</a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>現在参加可能な部屋はありません。</p>
+{% endif %} {% endblock %}
